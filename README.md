@@ -16,7 +16,7 @@ TechnicSolder was originaly developed by Technic using the Laravel Framework. Ho
 # Detailed Installation
 > ***Note: If you already have a working web server with mysql and zip extensions and enabled rewrite mod, you can [skip to step 6.](https://github.com/TheGameSpider/TechnicSolder#cloning-technicsolder-repository)***
 
-**1. Install Ubuntu Server (https://www.ubuntu.com/download/server)** <br />
+**1. Install Ubuntu Server 20.04 (https://releases.ubuntu.com/20.04/)** <br />
 **2. Login to Ubuntu with credentials you set.** <br />
 **3. Become root**
 Root is basically the "god account" that controls everything on the system.
@@ -29,7 +29,7 @@ sudo su -
 This command installs what's known as a LAMP Stack, which includes Apache2, MariaDB, and PHP. Very useful!
 ```bash
 apt update
-apt -y install apache2 php libapache2-mod-php mariadb-server php-mysql php-dev zlib1g-dev libzip4 libzip-dev php-zip
+apt -y install apache2 php libapache2-mod-php mariadb-server php-mysql php-dev zlib1g-dev libzip5 libzip-dev php-zip
 ```
 The above command can take a while to complete. Once done, restart apache.<br />
 
@@ -51,6 +51,8 @@ Now we can test whether our web server can correctly display content generated b
 ```bash
 curl http://icanhazip.com
 ```
+The above command shows your WAN address and will not work as your address if you dont' have your ports forwarded right to that server/machine. If your doing proxying like me use your local server ip to see if PHP is working. Example http://192.168.3.10/index.php
+
 Open in your web browser: `http://your_server_IP_address` <br />
 This page basically gives you information about your PHP Compiler. It is useful for debugging and to ensure that your settings are being applied correctly.<br />
 <br />
@@ -140,11 +142,17 @@ exit
 **Configure TechnicSolder** <br />
 
 ```bash
-chown -R www-data TechnicSolder
+chown -R www-data html
 ```
 
 Go to `http://your_server_IP_address` and fill out the form. If you followed these instructions, database name and username is `solder` <br />
 
 The final step is to set your Solder URL in Solder Configuration (In your https://technicpack.net profile)
+
+For some reason after filling this out Apache doesn't restart so restart apache one more time and you shoudl be up and running again!
+
+```bash
+service apache2 restart
+```
 
 That's it. You have successfully installed and configured TechnicSolder. It's ready to use!
